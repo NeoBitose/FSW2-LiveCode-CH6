@@ -1,0 +1,64 @@
+/* Style the navbar container */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar title styling */
+.navbar-title {
+  color: #f8f9fa;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* Styling for the menu list */
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+}
+
+/* Style each menu item */
+.navbar-item {
+  color: #f8f9fa;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s, background-color 0.3s;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* Hover effect for each item */
+.navbar-item:hover {
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+li {
+  list-style-type: none;
+}
+
+button {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.modal{
+  margin-bottom: 20px;
+  padding: 20px 0px;
+  width: 100%;
+  background-color: grey;
+}
+
+.about{
+  margin-top: 20px;
+  padding: 20px 0px;
+  width: 100%;
+  background-color: #363636;
+}

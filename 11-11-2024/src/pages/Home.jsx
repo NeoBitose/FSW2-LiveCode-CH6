@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
+import {useNavigate} from "react-router-dom"
 
 function Home() {
     // store react state
     const [shops, setShops] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const navigate = useNavigate()
 
     //fetch data
     useEffect(() => {
@@ -17,7 +20,10 @@ function Home() {
                         Authorization: `Bearer ${token}`,
                     }
                 })
-                // console.log(response)
+                if (response.status == 500) {
+                    navigate('/login')
+                }
+                console.log(response)
                 const data = response.data
                 if (data.isSuccess) {
                     setShops(data.data.shops)
@@ -27,6 +33,7 @@ function Home() {
                 }
             }
             catch (error) {
+                
                 setError(`${error.message}`)
             }finally{
                 setLoading(false)

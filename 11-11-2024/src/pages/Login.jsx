@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function Login() {
 
@@ -19,7 +19,7 @@ function Login() {
                 password: password
             })
             console.log(response)
-            if(response.data.isSuccess){
+            if (response.data.isSuccess) {
                 const token = response.data.data.token
                 const username = response.data.data.username
                 localStorage.setItem("username", username)
@@ -54,7 +54,7 @@ function Login() {
                         <div className="mt-2">
                             <input
                                 value={email}
-                                onChange={(e) => {setEmail(e.target.value)}}
+                                onChange={(e) => { setEmail(e.target.value) }}
                                 id="email"
                                 name="email"
                                 type="email"
@@ -79,7 +79,7 @@ function Login() {
                         <div className="mt-2">
                             <input
                                 value={password}
-                                onChange={(e) => {setPassword(e.target.value)}}
+                                onChange={(e) => { setPassword(e.target.value) }}
                                 id="password"
                                 name="password"
                                 type="password"

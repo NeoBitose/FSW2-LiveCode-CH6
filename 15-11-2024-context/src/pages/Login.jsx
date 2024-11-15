@@ -1,41 +1,75 @@
 import axios from "axios"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import Notification from "../components/notification/Notification"
+import axiosInstance from "../api/axiosInstance"
+import { useAuth } from "../context/AuthContext"
+
 
 function Login() {
-    
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    
-    const [error, setError] = useState("")
-    const [loading, setLoading] = useState("")
-    
-    const navigate = useNavigate()
 
+    const [error, setError] = useState("")
+    const [loading, setLoading] = useState("Sign In")
+    const [notification, setNotification] = useState(null)
+    const navigate = useNavigate();
+
+    const { login } = useAuth();
+
+    // useEffect(() => {
+    //     if (localStorage.getItem("token") != null) {
+    //         navigate("/")    
+    //     }
+    // })
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/auth/login", {
-                email: email,
-                password: password
-            })
+
+            await login(email, password)
+
+            // const response = await axiosInstance.post("http://localhost:3000/api/v1/auth/login", {
+            //     email: email,
+            //     password: password
+            // })
+            setLoading("Loading...")
             console.log(response)
-            if (response.data.isSuccess) {
-                const token = response.data.data.token
-                const username = response.data.data.username
-                localStorage.setItem("username", username)
-                localStorage.setItem("token", token)
-            }
-            navigate("/")
+
+            // if (response.data.isSuccess) {
+            //     const token = response.data.data.token
+            //     const username = response.data.data.username
+            //     localStorage.setItem("username", username)
+            //     localStorage.setItem("token", token)
+            setNotification({
+                type: "succeess",
+                message: "Login successfully" || "An error occured",
+                description: "Login Correct"
+            })
+            setTimeout(() => {
+                setNotification(null)
+                setLoading("Sign In")
+                navigate(0)
+            }, 3000);
+
+            // }
         }
-        catch (error) {
-            console.log(error)
+        catch (err) {
+            setNotification({
+                type: "error",
+                message: err.message || "An error occured",
+                description: "Please try again"
+            })
+            setTimeout(() => setNotification(null), 3000);
         }
     }
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            {notification && (
+                <Notification type={notification.type} message={notification.message} description={notification.description} onClose={() => { setNotification(null) }} />
+            )}
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                     alt="Your Company"

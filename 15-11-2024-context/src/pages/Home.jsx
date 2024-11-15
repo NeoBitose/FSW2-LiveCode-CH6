@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
-import axios from 'axios'
+
 import { useNavigate } from "react-router-dom"
+
+import axiosInstance from "../api/axiosInstance"
 
 function Home() {
 
@@ -41,16 +43,18 @@ function Home() {
         const fetchShops = async () => {
             try {
                 const token = localStorage.getItem("token")
-                const response = await axios.get('http://localhost:3000/api/v1/shops', {
-                    params: body,
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
 
-                if (response.status == 500) {
-                    navigate('/login')
-                }
+                // const response = await axios.get('http://localhost:3000/api/v1/shops', {
+                //     params: body,
+                //     headers: {
+                //         Authorization: `Bearer ${token}`,
+                //     },
+                // })
+                // if (response.status == 500) {
+                //     navigate('/login')
+                // }
+
+                const response = await axiosInstance.get("/shops")
 
                 console.log(response)
                 const data = response.data

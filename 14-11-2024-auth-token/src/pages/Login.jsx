@@ -1,17 +1,26 @@
 import axios from "axios"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import Notification from "../components/notification/Notification"
 
 function Login() {
-    
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    
+
+    const [localStorages, setLocalStorages] = useState(false)
+
     const [error, setError] = useState("")
     const [loading, setLoading] = useState("")
-    
-    const navigate = useNavigate()
+    const [notification, setNotification] = useState(null)
 
+    const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     if (localStorage.getItem("token") != null) {
+    //         navigate("/")    
+    //     }
+    // })
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -26,16 +35,35 @@ function Login() {
                 const username = response.data.data.username
                 localStorage.setItem("username", username)
                 localStorage.setItem("token", token)
+                setLocalStorages(true)
+                setNotification({
+                    type: "succeess",
+                    message: "Login successfully" || "An error occured",
+                    description: "Login Correct"
+                })
+                setTimeout(() => {
+                    setNotification(null)
+                    navigate(0)
+                }, 3000);
+                
             }
-            navigate("/")
         }
-        catch (error) {
-            console.log(error)
+        catch (err) {
+            console.log(err.response.data.message)
+            setNotification({
+                type: "error",
+                message: err.response.data.message || "An error occured",
+                description: "Please try again"
+            })
+            setTimeout(() => setNotification(null), 3000);
         }
     }
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            {notification && (
+                <Notification type={notification.type} message={notification.message} description={notification.description} onClose={() => {setNotification(null)}} />
+            )}
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                     alt="Your Company"

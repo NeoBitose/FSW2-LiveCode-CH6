@@ -48,9 +48,9 @@ function Home() {
                     },
                 })
 
-                if (response.status == 500) {
-                    navigate('/login')
-                }
+                // if (response.status == 500) {
+                //     navigate('/login')
+                // }
 
                 console.log(response)
                 const data = response.data

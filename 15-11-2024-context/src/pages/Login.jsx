@@ -18,12 +18,6 @@ function Login() {
 
     const { login } = useAuth();
 
-    // useEffect(() => {
-    //     if (localStorage.getItem("token") != null) {
-    //         navigate("/")    
-    //     }
-    // })
-
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
